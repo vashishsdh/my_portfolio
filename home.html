@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Portfolio | Vashishsdh T R</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        :root {
+            --primary: #00ff9d;
+            --secondary: #bd00ff;
+            --bg: #0a0a0a;
+            --text: white;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            transition: background 0.5s, color 0.5s;
+        }
+
+        body.light-mode {
+            --bg: #f5f5f5;
+            --text: #0a0a0a;
+            --card-bg: rgba(0, 0, 0, 0.05);
+            --card-border: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Floating Navigation */
+        .floating-nav {
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            z-index: 1000;
+            border: 1px solid var(--card-border);
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .floating-nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 300;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .floating-nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            transition: 0.3s;
+        }
+
+        .floating-nav a:hover::after {
+            width: 100%;
+        }
+
+        .floating-nav a.active {
+            color: var(--primary);
+        }
+
+        /* Mode Toggle */
+        .mode-toggle {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem;
+            border-radius: 50%;
+            border: 1px solid var(--card-border);
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .mode-toggle i {
+            font-size: 1.2rem;
+            color: var(--text);
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 10%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hero Section */
+        #home {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #home h1 {
+            font-size: 4.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        #home p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* About Section */
+        #about {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        #about img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        #about .content {
+            flex: 1;
+        }
+
+        /* Tabbed Layout for Internships */
+        .tabbed-section {
+            margin-bottom: 2rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tabs button {
+            background: var(--card-bg);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            color: var(--text);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .tabs button.active {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+        }
+
+        .tabs button:hover {
+            transform: translateY(-5px);
+        }
+
+        .tab-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Skills Section */
+        #skills .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        #skills .skill-item {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        #skills .skill-item:hover {
+            transform: translateY(-10px);
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+        }
+
+        #skills .skill-item i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        #skills .skill-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #skills .skill-item p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Contact Section */
+        #contact form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        input, textarea, button {
+            padding: 1rem;
+            border-radius: 10px;
+            border: none;
+            background: var(--card-bg);
+            color: var(--text);
+        }
+
+        button {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Mode Toggle -->
+    <div class="mode-toggle" id="modeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="floating-nav">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#internships">Internships</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home">
+        <h1>Vashishsdh T R</h1>
+        <p>Full-Stack Designer & Electrical Engineer</p>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <img src="Screenshot 2025-01-23 214435.png" alt="Your Image">
+        <div class="content">
+            <h2 class="section-title">About Me</h2>
+            <p>I am Vashishsdh T R, pursuing B.E. – EEE at Sri Krishna College of Technology. I am adept at balancing academic achievements with extracurricular involvement, contributing to Electrical and Information Technology.</p>
+            <p><strong>Email:</strong> tr.siva3@gmail.com</p>
+            <p><strong>Phone:</strong> (+91) 6383279660</p>
+            <p><strong>Address:</strong> 143, KR Nagar, Seelapadi Bypass, Trichy Road, Dindigul.</p>
+            <p><strong>Languages:</strong> English (Professional Working), Tamil (Native).</p>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-item">
+                <i class="fas fa-code"></i>
+                <h3>Programming</h3>
+                <p>C++, Backend Development, IoT-based Programming</p>
+            </div>
+            <div class="skill-item">
+                <i class="fas fa-microchip"></i>
+                <h3>IoT & Embedded Systems</h3>
+                <p>ESP32, ESP8266, Raspberry Pi 4, Sensor Integration</p>
+            </div>
+            <div class="skill-item">
+                <i class="fas fa-brain"></i>
+                <h3>AI/ML & LLMs</h3>
+                <p>Retrieval-Augmented Generation (RAG), LLaMA-3.1, Vertex AI Gemini API</p>
+            </div>
+            <div class="skill-item">
+                <i class="fas fa-cloud"></i>
+                <h3>Cloud Computing</h3>
+                <p>Cloud migration strategies, service models</p>
+            </div>
+            <div class="skill-item">
+                <i class="fas fa-laptop-code"></i>
+                <h3>Full Stack Development</h3>
+                <p>Frontend & Backend Development, Database Management</p>
+            </div>
+            <div class="skill-item">
+                <i class="fab fa-git"></i>
+                <h3>Git</h3>
+                <p>Version control, GitHub, GitLab</p>
+            </div>
+            <div class="skill-item">
+                <i class="fas fa-database"></i>
+                <h3>SQL & Data</h3>
+                <p>Database design, SQL queries, Data analysis</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Internships Section -->
+    <section id="internships">
+        <h2 class="section-title">Internships</h2>
+        <div class="tabbed-section">
+            <div class="tabs">
+                <button class="active" data-tab="internship1">Manufacturing Engineering</button>
+                <button data-tab="internship2">Data Science</button>
+                <button data-tab="internship3">Robotics & Drone Technology</button>
+                <button data-tab="internship4">Student Opinion Leader</button>
+                <button data-tab="internship5">Marketing</button>
+                <button data-tab="internship6">Campus Ambassador</button>
+            </div>
+            <!-- Manufacturing Engineering -->
+            <div class="tab-content active" id="internship1">
+                <img src="int1.jpg" alt="Manufacturing Engineering">
+                <h3>Manufacturing Engineering Intern</h3>
+                <p><strong>Company:</strong> Pricol</p>
+                <p><strong>Location:</strong> Coimbatore</p>
+                <p><strong>Duration:</strong> June 2024 – July 2024</p>
+                <p><strong>Description:</strong> Assisted in optimizing manufacturing processes to enhance efficiency and reduce costs. Conducted time and motion studies to identify areas for improvement, collaborated with cross-functional teams to implement lean manufacturing principles, and supported the maintenance and troubleshooting of manufacturing equipment.</p>
+            </div>
+            <!-- Data Science -->
+            <div class="tab-content" id="internship2">
+                <img src="Screenshot 2025-01-23 214148.png" alt="Data Science">
+                <h3>Data Science Intern</h3>
+                <p><strong>Company:</strong> GeakMinds</p>
+                <p><strong>Location:</strong> Chennai</p>
+                <p><strong>Duration:</strong> Feb 2024 – May 2024</p>
+                <p><strong>Description:</strong> Worked on data preprocessing, analysis, and visualization to extract actionable insights. Developed and implemented machine learning models to solve business problems, collaborated with senior data scientists on various projects, and presented findings and recommendations to stakeholders.</p>
+            </div>
+            <!-- Robotics & Drone Technology -->
+            <div class="tab-content" id="internship3">
+                <img src="Screenshot 2025-01-23 213300.png" alt="Robotics & Drone Technology">
+                <h3>Robotics & Drone Technology Intern</h3>
+                <p><strong>Company:</strong> Orgware Technologies</p>
+                <p><strong>Location:</strong> Chennai</p>
+                <p><strong>Duration:</strong> Mar 2024 – Jun 2024</p>
+                <p><strong>Description:</strong> Contributed to the development and testing of autonomous systems for drones and robotic platforms. Assisted in programming and calibrating drones for various applications, collaborated with the engineering team to integrate advanced sensors and control systems, and participated in field tests to evaluate performance and reliability.</p>
+            </div>
+            <!-- Student Opinion Leader -->
+            <div class="tab-content" id="internship4">
+                <img src="Screenshot 2025-01-23 214704.png" alt="Student Opinion Leader">
+                <h3>Student Opinion Leader Intern</h3>
+                <p><strong>Company:</strong> Snapchat</p>
+                <p><strong>Location:</strong> Bangalore-Remote</p>
+                <p><strong>Duration:</strong> Oct 2023 – Oct 2024</p>
+                <p><strong>Description:</strong> Engaged with the student community to gather feedback and insights on product features and user experience. Conducted surveys and focus groups to understand user preferences, collaborated with the product development team to relay critical insights, and contributed to marketing campaigns aimed at enhancing user engagement and satisfaction among the student demographic.</p>
+            </div>
+            <!-- Marketing -->
+            <div class="tab-content" id="internship5">
+                <img src="Screenshot 2025-01-23 214906.png" alt="Marketing">
+                <h3>Marketing Intern</h3>
+                <p><strong>Company:</strong> Maangler</p>
+                <p><strong>Location:</strong> Bangalore-Remote</p>
+                <p><strong>Duration:</strong> Aug 2023 – Sep 2023</p>
+                <p><strong>Description:</strong> Orchestrated digital campaigns, conducted market research, managed social media, and collaborated cross-functionally. Achievements: Increased website traffic by 40%, boosted social media following by 50%, and elevated lead conversions by 30%.</p>
+            </div>
+            <!-- Campus Ambassador -->
+            <div class="tab-content" id="internship6">
+                <img src="https://source.unsplash.com/400x300/?campus,ambassador" alt="Campus Ambassador">
+                <h3>Campus Ambassador</h3>
+                <p><strong>Company:</strong> IIT Bombay</p>
+                <p><strong>Location:</strong> Mumbai-Remote</p>
+                <p><strong>Duration:</strong> Mar 2023 – June 2023</p>
+                <p><strong>Description:</strong> Promoted institute events and initiatives within the campus community. Engaged with students to increase participation in workshops and seminars, coordinated with event organizers to ensure smooth execution, and utilized social media and on-campus channels to effectively disseminate information and gather feedback from peers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+<section id="achievements">
+    <h2 class="section-title">Achievements</h2>
+    <div class="tabbed-section">
+        <div class="tabs">
+            <button class="active" data-tab="achievement1">eBiz Ignite</button>
+            <button data-tab="achievement2">Strategize</button>
+            <button data-tab="achievement3">InnovatED</button>
+            <button data-tab="achievement4">Smart India Hackathon</button>
+            <button data-tab="achievement5">EDII Hackathon</button>
+            <button data-tab="achievement6">ThingQbator Entrepreneurship</button>
+        </div>
+        <!-- eBiz Ignite -->
+        <div class="tab-content active" id="achievement1">
+            <div class="achievement-content">
+                <img src="Screenshot 2025-01-23 215755.png" alt="eBiz Ignite">
+                <div class="text-content">
+                    <h3>Winner in eBiz Ignite</h3>
+                    <p><strong>Event:</strong> The Case Challenge (2023)</p>
+                    <p><strong>Organized by:</strong> Birla Institute of Technology, Ranchi</p>
+                    <p>Won the case challenge by presenting innovative solutions to real-world business problems.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Strategize -->
+        <div class="tab-content" id="achievement2">
+            <div class="achievement-content">
+                <img src="WhatsApp Image 2023-12-26 at 10.36.03_26542c37.jpg" alt="Strategize">
+                <div class="text-content">
+                    <h3>Finalist in Strategize</h3>
+                    <p><strong>Event:</strong> Strategize (2023)</p>
+                    <p><strong>Organized by:</strong> E-Cell, IIT Madras</p>
+                    <p>Reached the finals by showcasing strategic thinking and problem-solving skills.</p>
+                </div>
+            </div>
+        </div>
+        <!-- InnovatED -->
+        <div class="tab-content" id="achievement3">
+            <div class="achievement-content">
+                <img src="Screenshot 2025-01-23 215712.png" alt="InnovatED">
+                <div class="text-content">
+                    <h3>Winner in InnovatED</h3>
+                    <p><strong>Event:</strong> The Edtech Case Study</p>
+                    <p><strong>Organized by:</strong> Masters’ Union School of Business</p>
+                    <p>Won the competition by proposing innovative solutions for the education technology sector.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Smart India Hackathon -->
+        <div class="tab-content" id="achievement4">
+            <div class="achievement-content">
+                <img src="WhatsApp Image 2025-01-07 at 10.03.22_511884bf.jpg" alt="Smart India Hackathon">
+                <div class="text-content">
+                    <h3>Selected for Smart India Hackathon (SIH) Finale 2024</h3>
+                    <p><strong>Event:</strong> Smart India Hackathon (SIH) Finale</p>
+                    <p>Selected to compete in the national-level hackathon for innovative tech solutions.</p>
+                </div>
+            </div>
+        </div>
+        <!-- EDII Hackathon -->
+        <div class="tab-content" id="achievement5">
+            <div class="achievement-content">
+                <img src="20240904_172128.jpg" alt="EDII Hackathon">
+                <div class="text-content">
+                    <h3>Finalist in EDII Hackathon Bootcamp</h3>
+                    <p><strong>Event:</strong> EDII Hackathon Bootcamp</p>
+                    <p>Reached the finals by developing impactful solutions during the hackathon bootcamp.</p>
+                </div>
+            </div>
+        </div>
+        <!-- ThingQbator Entrepreneurship -->
+        <div class="tab-content" id="achievement6">
+            <div class="achievement-content">
+                <img src="WhatsApp Image 2024-11-27 at 15.53.23_cf4ee622.jpg" alt="ThingQbator Entrepreneurship">
+                <div class="text-content">
+                    <h3>Advanced to the Startup Stage and Felicitation</h3>
+                    <p><strong>Event:</strong> ThingQbator Entrepreneurship Track</p>
+                    <p><strong>Supported by:</strong> NASSCOM Foundation</p>
+                    <p>Advanced to the startup stage and received felicitation for innovative entrepreneurial ideas.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">Contact</h2>
+        <form>
+            <input type="text" placeholder="Name" required>
+            <input type="email" placeholder="Email" required>
+            <textarea placeholder="Message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <script>
+        // Mode Toggle
+        const modeToggle = document.getElementById('modeToggle');
+        const body = document.body;
+
+        modeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            const icon = modeToggle.querySelector('i');
+            if (body.classList.contains('light-mode')) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+            }
+        });
+
+        // Navigation
+        document.querySelectorAll('.floating-nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Tabbed Sections
+        const setupTabs = (container) => {
+            const tabs = container.querySelectorAll('.tabs button');
+            const contents = container.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+
+                    // Add active class to clicked tab and corresponding content
+                    tab.classList.add('active');
+                    const target = tab.getAttribute('data-tab');
+                    document.getElementById(target).classList.add('active');
+                });
+            });
+        };
+
+        // Initialize tabs for each section
+        document.querySelectorAll('.tabbed-section').forEach(setupTabs);
+    </script>
+</body>
+</html>
