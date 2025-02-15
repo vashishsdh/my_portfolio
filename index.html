@@ -100,6 +100,68 @@
             color: var(--text);
         }
 
+        /* Resume Download Button */
+        .resume-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .resume-download i {
+            font-size: 1.5rem;
+            transition: 0.3s;
+        }
+
+        .resume-download:hover {
+            transform: translateY(-5px);
+        }
+
+        .resume-download::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+            transform: translate(-50%, -50%) scale(0);
+            transition: 0.5s;
+            border-radius: 50%;
+        }
+
+        .resume-download:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* Custom Cursor */
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background: var(--primary);
+    border-radius: 50%;
+    pointer-events: none; /* Ensures the cursor doesn't interfere with clicks */
+    transform: translate(-50%, -50%);
+    z-index: 9999; /* Ensure it's above all other elements */
+    mix-blend-mode: difference; /* Makes the cursor stand out on any background */
+    transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease;
+}
+
+.custom-cursor.active {
+    width: 40px;
+    height: 40px;
+}
         /* Sections */
         section {
             padding: 6rem 10%;
@@ -259,6 +321,81 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
+        /* Slideshow Styles */
+        .slideshow-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 15px;
+            background: var(--card-bg);
+            padding: 2rem;
+        }
+
+        .project-slide {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .project-slide.active {
+            display: block;
+        }
+
+        .project-slide img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .project-slide h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-slide p {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .project-link:hover {
+            transform: translateY(-5px);
+        }
+
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--card-bg);
+            border: none;
+            color: var(--text);
+            padding: 1rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .prev:hover, .next:hover {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+        }
+
+        .prev {
+            left: 1rem;
+        }
+
+        .next {
+            right: 1rem;
+        }
+
         /* Contact Section */
         #contact form {
             display: flex;
@@ -283,6 +420,9 @@
     </style>
 </head>
 <body>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+
     <!-- Mode Toggle -->
     <div class="mode-toggle" id="modeToggle">
         <i class="fas fa-moon"></i>
@@ -295,6 +435,7 @@
         <a href="#skills">Skills</a>
         <a href="#internships">Internships</a>
         <a href="#achievements">Achievements</a>
+        <a href="#projects">Projects</a>
         <a href="#contact">Contact</a>
     </nav>
 
@@ -302,20 +443,27 @@
     <section id="home">
         <h1>Vashishsdh T R</h1>
         <p>Full-Stack Designer & Electrical Engineer</p>
+        
     </section>
 
     <!-- About Section -->
     <section id="about">
-        <img src="Screenshot 2025-01-23 214435.png" alt="Your Image">
+        <img src="WhatsApp Image 2025-02-15 at 21.33.09_a66102d2.jpg" alt="Your Image">
         <div class="content">
             <h2 class="section-title">About Me</h2>
-            <p>I am Vashishsdh T R, pursuing B.E. – EEE at Sri Krishna College of Technology. I am adept at balancing academic achievements with extracurricular involvement, contributing to Electrical and Information Technology.</p>
-            <p><strong>Email:</strong> tr.siva3@gmail.com</p>
+            <p>I am a tech enthusiast and innovator with expertise in IoT, embedded systems, AI, and cloud computing, skilled in C++ for DSA, hardware-software integration, and automation. With a passion for solving complex challenges, I thrive on building intelligent systems, optimizing performance, and pushing technological boundaries to create impactful and future-ready solutions. </p>
+            <br>
+            <p><strong>Email:</strong> tr.siva31@gmail.com</p>
+            <br>
             <p><strong>Phone:</strong> (+91) 6383279660</p>
-            <p><strong>Address:</strong> 143, KR Nagar, Seelapadi Bypass, Trichy Road, Dindigul.</p>
+            <br>
             <p><strong>Languages:</strong> English (Professional Working), Tamil (Native).</p>
         </div>
     </section>
+    <center><a href="Resume - 2025(Feb).pdf" download class="resume-download">
+            <span>Download Resume</span>
+            <i class="fas fa-download"></i>
+        </a></center>
 
     <!-- Skills Section -->
     <section id="skills">
@@ -429,89 +577,127 @@
     </section>
 
     <!-- Achievements Section -->
-<section id="achievements">
-    <h2 class="section-title">Achievements</h2>
-    <div class="tabbed-section">
-        <div class="tabs">
-            <button class="active" data-tab="achievement1">eBiz Ignite</button>
-            <button data-tab="achievement2">Strategize</button>
-            <button data-tab="achievement3">InnovatED</button>
-            <button data-tab="achievement4">Smart India Hackathon</button>
-            <button data-tab="achievement5">EDII Hackathon</button>
-            <button data-tab="achievement6">ThingQbator Entrepreneurship</button>
-        </div>
-        <!-- eBiz Ignite -->
-        <div class="tab-content active" id="achievement1">
-            <div class="achievement-content">
-                <img src="Screenshot 2025-01-23 215755.png" alt="eBiz Ignite">
-                <div class="text-content">
-                    <h3>Winner in eBiz Ignite</h3>
-                    <p><strong>Event:</strong> The Case Challenge (2023)</p>
-                    <p><strong>Organized by:</strong> Birla Institute of Technology, Ranchi</p>
-                    <p>Won the case challenge by presenting innovative solutions to real-world business problems.</p>
+    <section id="achievements">
+        <h2 class="section-title">Achievements</h2>
+        <div class="tabbed-section">
+            <div class="tabs">
+                <button class="active" data-tab="achievement1">eBiz Ignite</button>
+                <button data-tab="achievement2">Strategize</button>
+                <button data-tab="achievement3">InnovatED</button>
+                <button data-tab="achievement4">Smart India Hackathon</button>
+                <button data-tab="achievement5">EDII Hackathon</button>
+                <button data-tab="achievement6">ThingQbator Entrepreneurship</button>
+            </div>
+            <!-- eBiz Ignite -->
+            <div class="tab-content active" id="achievement1">
+                <div class="achievement-content">
+                    <img src="Screenshot 2025-01-23 215755.png" alt="eBiz Ignite">
+                    <div class="text-content">
+                        <h3>Winner in eBiz Ignite</h3>
+                        <p><strong>Event:</strong> The Case Challenge (2023)</p>
+                        <p><strong>Organized by:</strong> Birla Institute of Technology, Ranchi</p>
+                        <p>Won the case challenge by presenting innovative solutions to real-world business problems.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Strategize -->
+            <div class="tab-content" id="achievement2">
+                <div class="achievement-content">
+                    <img src="WhatsApp Image 2023-12-26 at 10.36.03_26542c37.jpg" alt="Strategize">
+                    <div class="text-content">
+                        <h3>Finalist in Strategize</h3>
+                        <p><strong>Event:</strong> Strategize (2023)</p>
+                        <p><strong>Organized by:</strong> E-Cell, IIT Madras</p>
+                        <p>Reached the finals by showcasing strategic thinking and problem-solving skills.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- InnovatED -->
+            <div class="tab-content" id="achievement3">
+                <div class="achievement-content">
+                    <img src="Screenshot 2025-01-23 215712.png" alt="InnovatED">
+                    <div class="text-content">
+                        <h3>Winner in InnovatED</h3>
+                        <p><strong>Event:</strong> The Edtech Case Study</p>
+                        <p><strong>Organized by:</strong> Masters’ Union School of Business</p>
+                        <p>Won the competition by proposing innovative solutions for the education technology sector.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Smart India Hackathon -->
+            <div class="tab-content" id="achievement4">
+                <div class="achievement-content">
+                    <img src="WhatsApp Image 2025-01-07 at 10.03.22_511884bf.jpg" alt="Smart India Hackathon">
+                    <div class="text-content">
+                        <h3>Selected for Smart India Hackathon (SIH) Finale 2024</h3>
+                        <p><strong>Event:</strong> Smart India Hackathon (SIH) Finale</p>
+                        <p>Selected to compete in the national-level hackathon for innovative tech solutions.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- EDII Hackathon -->
+            <div class="tab-content" id="achievement5">
+                <div class="achievement-content">
+                    <img src="20240904_172128.jpg" alt="EDII Hackathon">
+                    <div class="text-content">
+                        <h3>Finalist in EDII Hackathon Bootcamp</h3>
+                        <p><strong>Event:</strong> EDII Hackathon Bootcamp</p>
+                        <p>Reached the finals by developing impactful solutions during the hackathon bootcamp.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- ThingQbator Entrepreneurship -->
+            <div class="tab-content" id="achievement6">
+                <div class="achievement-content">
+                    <img src="WhatsApp Image 2024-11-27 at 15.53.23_cf4ee622.jpg" alt="ThingQbator Entrepreneurship">
+                    <div class="text-content">
+                        <h3>Advanced to the Startup Stage and Felicitation</h3>
+                        <p><strong>Event:</strong> ThingQbator Entrepreneurship Track</p>
+                        <p><strong>Supported by:</strong> NASSCOM Foundation</p>
+                        <p>Advanced to the startup stage and received felicitation for innovative entrepreneurial ideas.</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- Strategize -->
-        <div class="tab-content" id="achievement2">
-            <div class="achievement-content">
-                <img src="WhatsApp Image 2023-12-26 at 10.36.03_26542c37.jpg" alt="Strategize">
-                <div class="text-content">
-                    <h3>Finalist in Strategize</h3>
-                    <p><strong>Event:</strong> Strategize (2023)</p>
-                    <p><strong>Organized by:</strong> E-Cell, IIT Madras</p>
-                    <p>Reached the finals by showcasing strategic thinking and problem-solving skills.</p>
-                </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2 class="section-title">Projects</h2>
+        <div class="slideshow-container">
+            <!-- Project 1 -->
+            <div class="project-slide active">
+                <img src="WhatsApp Image 2024-12-15 at 17.32.28_f8dbd08d.jpg" alt="Water Quality Testing System">
+                <h3>Water Quality Testing & H₂S Detection System</h3>
+                <p>Designed a system to measure residual chlorine, silver ions, and H₂S gas in water using TCS3200 and MQ sensors. Integrated LED indicators and a display for real-time contamination analysis.</p>
+                <a href="#" class="project-link">View Details</a>
             </div>
-        </div>
-        <!-- InnovatED -->
-        <div class="tab-content" id="achievement3">
-            <div class="achievement-content">
-                <img src="Screenshot 2025-01-23 215712.png" alt="InnovatED">
-                <div class="text-content">
-                    <h3>Winner in InnovatED</h3>
-                    <p><strong>Event:</strong> The Edtech Case Study</p>
-                    <p><strong>Organized by:</strong> Masters’ Union School of Business</p>
-                    <p>Won the competition by proposing innovative solutions for the education technology sector.</p>
-                </div>
+            <!-- Project 2 -->
+            <div class="project-slide">
+                <img src="3614c886-0b1d-4930-a878-85a829897902.png" alt="Borewell Rescue System">
+                <h3>Borewell Rescue System</h3>
+                <p>Developed a borewell rescue system using Raspberry Pi 4, ultrasonic sensors, and CO₂ monitoring. Displays environmental conditions and triggers alerts for trapped individuals.</p>
+                <a href="#" class="project-link">View Details</a>
             </div>
-        </div>
-        <!-- Smart India Hackathon -->
-        <div class="tab-content" id="achievement4">
-            <div class="achievement-content">
-                <img src="WhatsApp Image 2025-01-07 at 10.03.22_511884bf.jpg" alt="Smart India Hackathon">
-                <div class="text-content">
-                    <h3>Selected for Smart India Hackathon (SIH) Finale 2024</h3>
-                    <p><strong>Event:</strong> Smart India Hackathon (SIH) Finale</p>
-                    <p>Selected to compete in the national-level hackathon for innovative tech solutions.</p>
-                </div>
+            <!-- Project 3 -->
+            <div class="project-slide">
+                <img src="5e1cfb53-166f-4997-9e9b-f05624a31514.png" alt="Black Box System for Cars">
+                <h3>Black Box System for Cars</h3>
+                <p>Created a vehicle black box system that records critical accident data using sensors. Integrates a GSM module for emergency alerts and real-time monitoring.</p>
+                <a href="#" class="project-link">View Details</a>
             </div>
-        </div>
-        <!-- EDII Hackathon -->
-        <div class="tab-content" id="achievement5">
-            <div class="achievement-content">
-                <img src="20240904_172128.jpg" alt="EDII Hackathon">
-                <div class="text-content">
-                    <h3>Finalist in EDII Hackathon Bootcamp</h3>
-                    <p><strong>Event:</strong> EDII Hackathon Bootcamp</p>
-                    <p>Reached the finals by developing impactful solutions during the hackathon bootcamp.</p>
-                </div>
+            <!-- Project 4 -->
+            <div class="project-slide">
+                <img src="f911bf66-226e-4018-ac6e-9e1bc4f1ecf2.png" alt="EDDIE - AI Tutor">
+                <h3>EDDIE - AI Tutor & Conversational Companion</h3>
+                <p>Designed an AI-powered educational assistant with a Socratic teaching approach. Uses GPT-4 and ScholarGPT for academic insights, with humor and wit inspired by Alan Watts and Stephen Fry.</p>
+                <a href="#" class="project-link">View Details</a>
             </div>
+            <!-- Navigation Buttons -->
+            <button class="prev" onclick="prevSlide()">&#10094;</button>
+            <button class="next" onclick="nextSlide()">&#10095;</button>
         </div>
-        <!-- ThingQbator Entrepreneurship -->
-        <div class="tab-content" id="achievement6">
-            <div class="achievement-content">
-                <img src="WhatsApp Image 2024-11-27 at 15.53.23_cf4ee622.jpg" alt="ThingQbator Entrepreneurship">
-                <div class="text-content">
-                    <h3>Advanced to the Startup Stage and Felicitation</h3>
-                    <p><strong>Event:</strong> ThingQbator Entrepreneurship Track</p>
-                    <p><strong>Supported by:</strong> NASSCOM Foundation</p>
-                    <p>Advanced to the startup stage and received felicitation for innovative entrepreneurial ideas.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
 
     <!-- Contact Section -->
     <section id="contact">
@@ -525,6 +711,54 @@
     </section>
 
     <script>
+        // Custom Cursor
+const cursor = document.createElement('div');
+cursor.classList.add('custom-cursor');
+document.body.appendChild(cursor); // Append to the body, not inside any section
+
+// Track mouse movement
+document.addEventListener('mousemove', (e) => {
+    cursor.style.left = `${e.clientX}px`; // Use clientX and clientY for full-page tracking
+    cursor.style.top = `${e.clientY}px`;
+});
+
+// Add active class on mouse down
+document.addEventListener('mousedown', () => {
+    cursor.classList.add('active');
+});
+
+// Remove active class on mouse up
+document.addEventListener('mouseup', () => {
+    cursor.classList.remove('active');
+});
+
+// Add active class when hovering over interactive elements
+document.addEventListener('mouseover', (e) => {
+    if (
+        e.target.tagName === 'A' || // Links
+        e.target.tagName === 'BUTTON' || // Buttons
+        e.target.tagName === 'INPUT' || // Input fields
+        e.target.tagName === 'TEXTAREA' || // Textareas
+        e.target.tagName === 'SELECT' || // Dropdowns
+        e.target.classList.contains('clickable') // Any element with class 'clickable'
+    ) {
+        cursor.classList.add('active');
+    }
+});
+
+// Remove active class when leaving interactive elements
+document.addEventListener('mouseout', (e) => {
+    if (
+        e.target.tagName === 'A' ||
+        e.target.tagName === 'BUTTON' ||
+        e.target.tagName === 'INPUT' ||
+        e.target.tagName === 'TEXTAREA' ||
+        e.target.tagName === 'SELECT' ||
+        e.target.classList.contains('clickable')
+    ) {
+        cursor.classList.remove('active');
+    }
+});
         // Mode Toggle
         const modeToggle = document.getElementById('modeToggle');
         const body = document.body;
@@ -567,6 +801,35 @@
                 });
             });
         };
+
+        // Slideshow Functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.project-slide');
+
+        const showSlide = (index) => {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+        };
+
+        const nextSlide = () => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        };
+
+        const prevSlide = () => {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        };
+
+        // Initialize the first slide
+        showSlide(currentSlide);
+
+        // Optional: Auto-play the slideshow
+        setInterval(nextSlide, 5000);
 
         // Initialize tabs for each section
         document.querySelectorAll('.tabbed-section').forEach(setupTabs);
